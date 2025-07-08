@@ -1,0 +1,29 @@
+# File: .github/workflows/shell-lint.yml
+name: Shell Lint
+
+on:
+  push:
+    paths:
+      - 'bash/**.sh'
+      - 'tools/**.sh'
+  pull_request:
+    paths:
+      - 'bash/**.sh'
+      - 'tools/**.sh'
+
+jobs:
+  lint:
+    name: ShellCheck
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Install ShellCheck
+        run: sudo apt-get update && sudo apt-get install -y shellcheck
+
+      - name: Run ShellCheck
+        run: |
+          find bash/ tools/ -type f -name '*.sh' -print0 | \
+            xargs -0 shellcheck -e SC1090,SC1091

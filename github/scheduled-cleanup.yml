@@ -1,0 +1,19 @@
+# File: .github/workflows/scheduled-cleanup.yml
+name: Scheduled Cleanup
+
+on:
+  schedule:
+    - cron: '0 3 * * 0'   # Every Sunday at 03:00 UTC
+
+jobs:
+  run-cleanup:
+    name: Run Cleanup Script
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v3
+
+      - name: Execute cleanup-temp.sh
+        run: |
+          chmod +x bash/cleanup-temp.sh
+          bash bash/cleanup-temp.sh /tmp 7
