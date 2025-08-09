@@ -1,0 +1,18 @@
+on:
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Build & Publish
+        uses: bitovi/github-actions-react-to-github-pages@v1.2.4
+        with:
+          path: build   # or 'dist' if using Vite
